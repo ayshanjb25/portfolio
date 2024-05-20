@@ -1,3 +1,4 @@
+import emailjs from "@emailjs/browser";
 import React, { useRef, useState } from "react";
 
 const Contact = () => {
@@ -9,7 +10,11 @@ const Contact = () => {
   };
   const handleFocus = ()=>{};
   const handleBlur = ()=>{};
-  const handleSubmit = ()=>{};
+  const handleSubmit = (e)=>{
+    e.preventDefault();
+    setIsLoading(true);
+    emailjs.sendForm();
+  };
   return (
     <section className="relative flex lg:flex-row flex-col max-container">
       <div className="flex-1 min-w-[50%] flex flex-col">
