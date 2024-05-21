@@ -13,7 +13,25 @@ const Contact = () => {
   const handleSubmit = (e)=>{
     e.preventDefault();
     setIsLoading(true);
-    emailjs.sendForm();
+    emailjs.send(
+      import.meta.env.APP_EMAILJS_SERVICE_ID,
+      import.meta.env.APP_EMAILJS_TEMPLATE_ID,
+      {
+        from_name:form.name,
+        to_name:"Aisha",
+        from_email:form.email,
+        to_email:"ayshanjb25@gmail.com",
+        message:form.message
+      },import.meta.env.APP_EMAILJS_PUBLIC_KEY
+
+    ).then(()=>{
+      setIsLoading(false);
+
+      setForm({name:'',email:'',message:''});
+    }).catch((error)=>{
+      setIsLoading(false);
+      console.log(error);
+    });
   };
   return (
     <section className="relative flex lg:flex-row flex-col max-container">
