@@ -5,6 +5,7 @@ import Loader from "../components/Loader";
 import Bird from "../models/Bird";
 import Island from "../models/Island";
 import Plane from "../models/Plane";
+import Plane2 from "../models/Plane2";
 import Sky from "../models/Sky";
 
 const Home = () => {
@@ -31,7 +32,9 @@ const Home = () => {
       screenScale = [1.5,1.5,1.5]
       screenPosition = [0,-1.5,0]
     }else{
-      screenScale = [3,3,3];
+      // screenScale = [3,3,3];
+      // screenPosition = [0,-4,-4]
+      screenScale = [0.8,0.8,0.8];
       screenPosition = [0,-4,-4]
     }
     return [screenScale, screenPosition,]
@@ -71,11 +74,15 @@ const Home = () => {
             setIsRotating={setIsRotating}
             setCurrentStage={setCurrentStage}
           />
-          <Plane position={planePosition}
+          {/* <Plane position={planePosition}
           scale={planeScale}
           isRotating={isRotating}
           rotation={[0,20,0]}
-          />
+          /> */}
+          <Plane2 position={planePosition}
+          scale={planeScale}
+          isRotating={isRotating}
+          rotation={[0,2.9,0]}/>
         </Suspense>
       </Canvas>
     </section>
