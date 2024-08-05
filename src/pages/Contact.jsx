@@ -1,10 +1,10 @@
-import emailjs from "@emailjs/browser";
 import Loader  from "../components/Loader";
 import { Canvas } from "@react-three/fiber";
 import React, { Suspense, useRef, useState } from "react";
 import Fox from '../models/Fox'
 import useAlert from "../hooks/useAlert";
 import Alert from "../components/Alert";
+import emailjs from "@emailjs/browser";
 
 const Contact = () => {
   const formRef = useRef(null);
@@ -17,13 +17,17 @@ const Contact = () => {
   };
   const handleFocus = ()=>setCurrentAnimation('walk');
   const handleBlur = ()=>setCurrentAnimation('idle');
+
   const handleSubmit = (e)=>{
     e.preventDefault();
     setIsLoading(true);
     setCurrentAnimation('hit');
+    console.log(import.meta.env.VITE_APP_EMAILJS_SERVICE_ID);
+    console.log(import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID);
+    console.log(import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY);
     emailjs.send(
-      import.meta.env.APP_EMAILJS_SERVICE_ID,
-      import.meta.env.APP_EMAILJS_TEMPLATE_ID,
+      import.meta.env.VITE_APP_EMAILJS_SERVICE_ID,
+      import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID,
       {
         from_name:form.name,
         to_name:"Aisha",
@@ -31,7 +35,7 @@ const Contact = () => {
         to_email:"ayshanjb25@gmail.com",
         message:form.message
       },
-      import.meta.env.APP_EMAILJS_PUBLIC_KEY
+      import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
     ).then(()=>{
       setIsLoading(false);
 
@@ -59,8 +63,10 @@ const Contact = () => {
       });
     });
   };
+
+  
   return (
-    <section className="relative flex lg:flex-row flex-col max-container">
+    <section className="relative flex lg:flex-row flex-col max-container h-[100vh]">
 {alert.show && <Alert {...alert}/>}
       <div className="flex-1 min-w-[50%] flex flex-col">
         <h1 className="head-text">Get in Touch</h1>

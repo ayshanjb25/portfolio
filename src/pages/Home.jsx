@@ -1,16 +1,32 @@
 import { Canvas } from "@react-three/fiber";
-import React, { Suspense, useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import HomeInfo from "../components/HomeInfo";
 import Loader from "../components/Loader";
 import Bird from "../models/Bird";
 import Island from "../models/Island";
-import Plane from "../models/Plane";
 import Plane2 from "../models/Plane2";
 import Sky from "../models/Sky";
+import sakura from '../assets/sakura.mp3'
+import { soundoff, soundon } from "../assets/icons";
 
 const Home = () => {
+  const audioRef = useRef(new Audio(sakura));
+  audioRef.current.volume = 0.4;
+  audioRef.current.loop = true;
   const [isRotating, setIsRotating] = useState(false);
   const [currentStage, setCurrentStage] = useState(1);
+  const [isPlayingMusic, setIsPlayingMusic] = useState(false);
+
+  useEffect(()=>{
+    if(isPlayingMusic){
+      audioRef.current.play();
+    }
+
+    return ()=>{
+      audioRef.current.pause();
+    }
+  },[isPlayingMusic]);
+
   const adjustIslandForScreenSize = () => {
     let screenScale = null;
     let screenPosition = [0, -6.5, -43];
@@ -34,8 +50,8 @@ const Home = () => {
     }else{
       // screenScale = [3,3,3];
       // screenPosition = [0,-4,-4]
-      screenScale = [0.8,0.8,0.8];
-      screenPosition = [0,-4,-4]
+      screenScale = [0.7,0.7,0.7];
+      screenPosition = [0,-5,-5]
     }
     return [screenScale, screenPosition,]
   }
@@ -78,13 +94,20 @@ const Home = () => {
           scale={planeScale}
           isRotating={isRotating}
           rotation={[0,20,0]}
-          /> */}
+          />  */}
           <Plane2 position={planePosition}
           scale={planeScale}
           isRotating={isRotating}
           rotation={[0,2.9,0]}/>
         </Suspense>
       </Canvas>
+
+      <div className="absolute bottom-2 left-2">
+        <img src={!isPlayingMusic ? soundoff : soundon}
+        alt="sound"
+        className="w-10 h-10 cursor-pointer object-contain"
+        onClick={()=> setIsPlayingMusic(!isPlayingMusic)}/>
+      </div>
     </section>
   );
 };
